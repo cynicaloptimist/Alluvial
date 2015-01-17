@@ -45,12 +45,12 @@ namespace Alluvial.Tests
             };
 
             var balanceProjection = await stream.ProjectWith(AccountBalanceProjector(),
-                                                                 projection);
+                projection);
 
             balanceProjection.Balance
-                             .Should()
-                             .Be(111m,
-                                 "the first two items in the sequence should not have been applied, and the prior projection state should have been used");
+                .Should()
+                .Be(111m,
+                    "the first two items in the sequence should not have been applied, and the prior projection state should have been used");
         }
 
         [Test]
@@ -64,10 +64,10 @@ namespace Alluvial.Tests
             };
 
             var finalProjection = await stream.ProjectWith(AccountBalanceProjector(),
-                                                               initialProjection);
+                initialProjection);
 
             finalProjection.ShouldBeEquivalentTo(initialProjection,
-                                                 "the projection cursor is past the end of the event stream so no events should be applied");
+                "the projection cursor is past the end of the event stream so no events should be applied");
         }
 
         [Test]
@@ -80,8 +80,8 @@ namespace Alluvial.Tests
             var batch = await domainEvents.Fetch(query);
 
             batch.Count()
-                 .Should()
-                 .Be(4);
+                .Should()
+                .Be(4);
         }
 
         [Test]
@@ -104,18 +104,18 @@ namespace Alluvial.Tests
             }
 
             var domainEvents = stream.Map(es => es.Select(e => e.Body)
-                                                      .OfType<FundsWithdrawn>());
+                .OfType<FundsWithdrawn>());
 
             var query = domainEvents.CreateQuery();
 
             var batch = await query.NextBatch();
 
             batch.Count()
-                 .Should()
-                 .Be(5);
+                .Should()
+                .Be(5);
             query.Cursor.As<int>()
-                 .Should()
-                 .Be(9);
+                .Should()
+                .Be(9);
         }
 
         private static IStreamAggregator<BalanceProjection, EventMessage> AccountBalanceProjector()
@@ -127,22 +127,22 @@ namespace Alluvial.Tests
 
                     projection.Balance = projection.Balance
                                          - domainEvents
-                                               .OfType<FundsWithdrawn>()
-                                               .Sum(e => e.Amount)
+                                             .OfType<FundsWithdrawn>()
+                                             .Sum(e => e.Amount)
                                          + domainEvents
-                                               .OfType<FundsDeposited>()
-                                               .Sum(e => e.Amount);
+                                             .OfType<FundsDeposited>()
+                                             .Sum(e => e.Amount);
                 })
-                             .Pipeline(async (projection, e, next) =>
-                             {
-                                 return await next(projection ?? new BalanceProjection
-                                 {
-                                     AggregateId = e.Select(m => m.Body)
-                                                    .OfType<IDomainEvent>()
-                                                    .First()
-                                                    .AggregateId
-                                 }, e);
-                             });
+                .Pipeline(async (projection, e, next) =>
+                {
+                    return await next(projection ?? new BalanceProjection
+                    {
+                        AggregateId = e.Select(m => m.Body)
+                            .OfType<IDomainEvent>()
+                            .First()
+                            .AggregateId
+                    }, e);
+                });
         }
 
         private static void PopulateEventStream(IStoreEvents store, string streamId)
