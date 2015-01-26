@@ -12,6 +12,7 @@ namespace Alluvial
         static Cursor()
         {
             By<int>.Create = () => new SequentialCursor();
+            By<long>.Create = () => new SequentialCursor();
             By<DateTime>.Create = () => new ChronologicalCursor();
             By<DateTimeOffset>.Create = () => new ChronologicalCursor();
             By<string>.Create = () => new AlphabeticalCursor();

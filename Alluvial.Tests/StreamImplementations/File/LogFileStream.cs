@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using FluentAssertions;
 
 namespace Alluvial.Tests
 {
@@ -40,7 +41,7 @@ namespace Alluvial.Tests
 
         public async Task<IStreamBatch<LogEntry>> Fetch(IStreamQuery query)
         {
-            file.Seek((long)query.Cursor.Position, SeekOrigin.Begin);
+            file.Seek(query.Cursor.As<long>(), SeekOrigin.Begin);
             var lines = new List<string>();
 
             using (var lineStream = new StreamReader(file))

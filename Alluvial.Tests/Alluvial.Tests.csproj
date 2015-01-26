@@ -71,11 +71,12 @@
     <Compile Include="BankDomain\FundsDeposited.cs" />
     <Compile Include="BankDomain\IDomainEvent.cs" />
     <Compile Include="CursorTests.cs" />
+    <Compile Include="LogStreamCatchupTests.cs" />
     <Compile Include="PipelineTests.cs" />
     <Compile Include="StreamImplementations\IMapProjection.cs" />
     <Compile Include="StreamCatchupTests.cs" />
     <Compile Include="BankDomain\FundsWithdrawn.cs" />
-    <Compile Include="StreamImplementations\File\LogFileDataStream.cs" />
+    <Compile Include="StreamImplementations\File\LogFileStream.cs" />
     <Compile Include="StreamImplementations\File\LogEntry.cs" />
     <Compile Include="StreamImplementations\File\FileStreamCursor.cs" />
     <Compile Include="StreamImplementations\NEventStore\NEventStoreStream.cs" />

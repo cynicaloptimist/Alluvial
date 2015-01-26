@@ -5,9 +5,9 @@ namespace Alluvial
     [DebuggerStepThrough]
     internal class SequentialCursor : IIncrementableCursor
     {
-        private int position;
+        private long position;
 
-        public SequentialCursor(int position = 0,
+        public SequentialCursor(long position = 0,
                                 bool ascending = true)
         {
             Ascending = ascending;
@@ -44,7 +44,7 @@ namespace Alluvial
         public virtual bool HasReached(dynamic point)
         {
             return Cursor.HasReached(
-                position.CompareTo((int) point),
+                position.CompareTo((long) point),
                 Ascending);
         }
     }
