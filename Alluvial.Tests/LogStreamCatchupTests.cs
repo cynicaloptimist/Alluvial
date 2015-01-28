@@ -15,7 +15,6 @@ namespace Alluvial.Tests
     {
         private string filename;
         private Guid[] aggregateIds;
-        private LogFileStream stream;
 
         [SetUp]
         public void SetUp()
@@ -31,7 +30,6 @@ namespace Alluvial.Tests
                 string.Format("1/16/2015 6:30:21.150PM: [{0}] User: jane@contoso.com", aggregateIds[1]),
                 string.Format("1/16/2015 6:30:21.160PM: [{0}] StatusCode: 200", aggregateIds[0]),
             });
-            // stream = new LogFileStream(new FileStream(filename, FileMode.Open), Guid.NewGuid().ToString());
         }
 
         [Test]
